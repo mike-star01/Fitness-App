@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* CHECKBOX CSS */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 42px;
+            height: 22px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            top: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(21px);
+        }
+
+        /* Align label and switch on the right */
+        .setting-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-right: 20px;
+        }
+
+        .setting-option p {
+            margin: 0;
+        }
+
+        .weight-container, .calorie-container, .nutrient-intake-container, .daily-movement-container, .sleep-container {
+            padding: 20px;
+            margin: 20px;
+            border: 1px solid rgb(205, 205, 205);
+            border-radius: 5px;
+        }
+
+        /* Adjust counters layout */
+        .counter {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between the items */
+        }
+
+        .counter input {
+            width: auto; /* Auto width for date input */
+        }
+
+        /* Long counter container for both weight and calorie inputs */
+        .long-counter {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 10px; /* Space between input and button */
+        }
+
+        .long-counter input[type="number"] {
+            flex-grow: 1; /* Make input take most of the available space */
+        }
+
+        .set-button {
+            width: 60px; /* Fixed narrow width for the Set button */
+        }
+
+        .calorie-container p {
+            margin-left: 5px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <h1>Goals and Targets</h1>
+
+    <div class="weight-container">
+
+        <h4>Weight Goal</h4>
+
+        <div class="long-counter">
+            <input type="number" class="style-long-counter" placeholder="Target Weight">
+            <input type="submit" class="set-button" value="Set">
+        </div>
+
+        <div class="counter">
+            <p>Target Date</p>
+            <input type="date" id="date" name="date">
+            <input type="submit" class="set-button" value="Set">
+        </div>
+    </div>
+
+    <div class="calorie-container">
+
+        <h4>Daily Calorie Burn</h4>
+
+        <div class="long-counter">
+            <input type="number" class="style-long-counter" placeholder="Calorie Target">
+            <p>calories</p>
+        </div>
+
+        <div class="setting-option">
+            <p>Adaptive Recommendations</p>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    
+    <div class="nutrient-intake-container">
+
+        <h4>Nutrient Intake Goals</h4>
+
+        <div class="counter">
+            <p>Protein</p>
+            <input type="number" class="style-counter" placeholder="grams">
+        </div>
+
+        <div class="counter">
+            <p>Carbs</p>
+            <input type="number" class="style-counter" placeholder="grams">
+        </div>
+
+        <div class="counter">
+            <p>Fats</p>
+            <input type="number" class="style-counter" placeholder="grams">
+        </div>
+
+        <div class="counter">
+            <p>Fiber</p>
+            <input type="number" class="style-counter" placeholder="grams">
+        </div>
+    </div>
+
+    <div class="daily-movement-container">
+
+        <h4>Daily Movement Goals</h4>
+
+        <div class="counter">
+            <p>Steps</p>
+            <input type="number" class="style-counter" placeholder="steps">
+        </div>
+
+        <div class="counter">
+            <p>Active minutes</p>
+            <input type="number" class="style-counter" placeholder="minutes">
+        </div>
+    </div>
+
+    <div class="sleep-container">
+
+        <h4>Sleep Goals</h4>
+
+        <div class="counter">
+            <p>Sleep Duration</p>
+
+            <div class="input-group">
+                <input type="number" class="style-counter" placeholder="hours">
+                <input type="number" class="style-counter" placeholder="minutes">
+            </div>
+        </div>
+
+        <div class="counter">
+            <p>Bedtime</p>
+
+            <div class="input-group">
+                <input type="number" class="style-counter" placeholder="hours">
+                <input type="number" class="style-counter" placeholder="minutes">
+            </div>
+        </div>
+
+        <div class="counter">
+
+            <p>Wake time</p>
+            <div class="input-group">
+                <input type="number" class="style-counter" placeholder="hours">
+                <input type="number" class="style-counter" placeholder="minutes">
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
