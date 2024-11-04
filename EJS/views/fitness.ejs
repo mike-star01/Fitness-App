@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    
+</head>
+
+<body>
+    
+    <div class="sidenav">
+        <a href="#">Overview</a>
+        <a href="#">Tracker</a>
+        <a href="/settings">Settings</a>
+        <a href="#">AI Chabot</a>
+    </div>
+      
+    <div class="main">
+
+      <h2>Fitness Dashboard</h2>
+
+      <div class = "food-input">
+        <input type="text" id="fname" name="fname" placeholder="What did yoooou eat?"><br><br> 
+        <button id="add-food-btn">Add</button>
+      </div>
+
+      <div class="nutrition-center">
+        <h3>Macros</h3>
+
+
+        <!--PROTEIN-->
+        <div class="progress-container">
+
+          <div class="circular-progress-container" id="Protein">
+              <svg viewBox="0 0 100 100" class="circular-progress">
+                  <circle class="bg"></circle>
+                  <circle class="fg"></circle>
+              </svg>
+              <div class="progress-number" id="p-percent">80</div>
+          </div>
+  
+
+          <!-- CARBS -->
+          <div class="circular-progress-container" id="Carbs">
+              <svg viewBox="0 0 100 100" class="circular-progress">
+                  <circle class="bg"></circle>
+                  <circle class="fg"></circle>
+              </svg>
+              <div class="progress-number" id="c-percent">80</div>
+          </div>
+  
+          <!--FAT -->
+          <div class="circular-progress-container" id="Fat">
+              <svg viewBox="0 0 100 100" class="circular-progress">
+                  <circle class="bg"></circle>
+                  <circle class="fg"></circle>
+              </svg>
+              <div class="progress-number" id="f-percent">80</div>
+          </div>
+  
+          <!--SUGAR-->
+          <div class="circular-progress-container" id="Sugar">
+              <svg viewBox="0 0 100 100" class="circular-progress">
+                  <circle class="bg"></circle>
+                  <circle class="fg"></circle>
+              </svg>
+              <div class="progress-number" id="s-percent">80</div>
+          </div>
+  
+          <!--VITAMINS-->
+          <div class="circular-progress-container" id="Vitamins">
+              <svg viewBox="0 0 100 100" class="circular-progress">
+                  <circle class="bg"></circle>
+                  <circle class="fg"></circle>
+              </svg>
+              <div class="progress-number" id="v-percent">80</div>
+          </div>
+
+          
+        </div>
+  
+
+        <!-- This script is to keep number inside circle-->
+        <script>
+          function resizeCircles(size) {
+              const containers = document.querySelectorAll('.circular-progress-container');
+
+              containers.forEach(container => {
+                container.style.setProperty('--size', size + 'px');
+              });
+          }
+  
+          // Example usage:
+          // resizeCircles(100); // Uncomment and change the value to resize all circles
+
+          //This is to change percent inside circle
+          function updateProgress(circleId, progressValue, percentId) {
+            const circle = document.getElementById(circleId);
+            if (circle) {
+              circle.style.setProperty('--target-progress', progressValue);
+              document.getElementById(percentId).textContent=(progressValue + '%');
+            }
+
+
+          }
+
+          // Updating:
+          updateProgress('Protein', 75, 'p-percent');
+          updateProgress('Carbs', 95, 'c-percent');
+          updateProgress('Fat', 25, 'f-percent');
+          updateProgress('Sugar', 30, 's-percent');
+          updateProgress('Vitamins', 55, 'v-percent');
+
+          
+
+        </script>
+
+      </div>
+
+
+      <!-- Daily Overview -->
+
+      <div class="daily-overview">
+
+        <h3>Overview</h3>
+
+
+        <!-- Chart -->
+        <div class="charts">
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+
+          <canvas id="barChart" style="width:100%;max-width:600px"></canvas>
+
+          <script>
+          const barValues = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+          const yValues = [55, 49, 44, 24, 45, 30, 40];
+          const barColors = ["orangered", "green","darkblue","orange","red","springgreen", "black"];
+
+          new Chart("barChart", {
+            type: "bar",
+            data: {
+              labels: barValues,
+              datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+              }]
+            },
+            options: {
+              legend: {display: false},
+              title: {
+                display: true,
+                text: "Calorie Intake"
+              }
+            }
+          });
+          </script>
+
+          <canvas id="lineChart" style="width:100%;max-width:600px"></canvas>
+
+          <script>
+          const lineValues = [100,200,300,400,500,600,700,800,900,1000];
+
+          new Chart("lineChart", {
+            type: "line",
+
+            data: {
+              labels: lineValues,
+              datasets: [{ 
+                label: "Intake",
+                data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+                borderColor: "mediumpurple",
+                fill: false
+              }, { 
+                label: "Expenditure",
+                data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+                borderColor: "lightsteelblue",
+                fill: false
+              }]
+            },
+
+            options: {
+              legend: {display: true}
+            }
+
+          });
+          </script>
+
+        </div>
+
+      </div>
+
+
+      <!-- MEALS-->
+
+      <div class="Meals">
+
+        <h3>Todays Meals</h3>
+        
+
+        <input type="text" id="newItem" placeholder="Enter new item">
+
+        <!-- Button to add the new item -->
+        <button class= "add-meal-button" onclick="addItem()">Add Item</button>
+
+        <!-- Unordered list to display the items -->
+        <ul id="itemList">
+            <li> Browines </li>
+            <li> Oreo </li>
+            <li> Rice w/ Chicken </li>
+        </ul>
+
+        <script>
+            // JavaScript function to add an item to the list
+            function addItem() {
+                // Get the value of the input field
+                var newItem = document.getElementById("newItem").value;
+
+                // Create a new list item element
+                var li = document.createElement("li");
+
+                // Set the text of the list item
+                li.textContent = newItem;
+
+                // Append the new item to the unordered list
+                document.getElementById("itemList").appendChild(li);
+
+                // Clear the input field
+                document.getElementById("newItem").value = '';
+            }
+        </script>
+
+        <input type="text" id="newItem" placeholder="Enter new item">
+
+        <!-- Button to add the new item -->
+        <button class= "add-meal-button" onclick="addItem()">Add Item</button>
+
+        <!-- Unordered list to display the items -->
+        <ul id="itemList">
+            <li> Morning run </li>
+            <li> Workout </li>
+        </ul>
+
+        <script>
+            // JavaScript function to add an item to the list
+            function addItem() {
+                // Get the value of the input field
+                var newItem = document.getElementById("newItem").value;
+
+                // Create a new list item element
+                var li = document.createElement("li");
+
+                // Set the text of the list item
+                li.textContent = newItem;
+
+                // Append the new item to the unordered list
+                document.getElementById("itemList").appendChild(li);
+
+                // Clear the input field
+                document.getElementById("newItem").value = '';
+            }
+        </script>
+
+      </div>
+
+    </div>
+    
+    
+</body>
+
+</html>
