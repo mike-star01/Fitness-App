@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snack Track</title>
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyD4jRqsHlQj_-T3nu1tiVlFFyY5h1KDcMs",
+      authDomain: "fitness-app-1400a.firebaseapp.com",
+      projectId: "fitness-app-1400a",
+      storageBucket: "fitness-app-1400a.appspot.com",
+      messagingSenderId: "653709233734",
+      appId: "1:653709233734:web:a88e8ad3bf5f09cbbc4447",
+      measurementId: "G-432SSL8KDG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+  
+    const food_API_KEY = "N5dWTX+Cx5yMpwC3tVR/Jw==E2Wzsqk4eJY7pwVQ";
+    const food_apiUrl = 'https://api.calorieninjas.com/v1/nutrition?query=';
+    //const query = 'half a cup of chicken fried rice';
+  
+    async function fetchNutritionData(query) {
+        try {
+            const response = await fetch(food_apiUrl + query, {
+                headers: { 'X-Api-Key': food_API_KEY }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            if (data.items && data.items.length > 0) {
+                const item = data.items[0]; // Assuming the first item is relevant
+                const result = {
+                    name: item.name,
+                    calories: item.calories,
+                    servingSize: item.serving_size_g,
+                    fat_total: item.fat_total_g,
+                    fat_saturated: item.fat_saturated_g,
+                    protein: item.protein_g,
+                    sodium: item.sodium_mg,
+                    potassium: item.potassium_mg,
+                    cholesterol: item.cholesterol_mg,
+                    carbs: item.carbohydrates_total_g,
+                    fiber: item.fiber_g,
+                    sugar: item.sugar_g,
+                };
+
+                return result;
+            } else {
+                console.error("No items found");
+            }
+
+        } catch (error) {
+            console.error("API Error: ", error);
+        }
+    }
+
+
+    async function submitSnack(event) {
+        event.preventDefault();
+        const snack = document.getElementById('snack').value;
+        const nutritionData = await fetchNutritionData(snack);
+
+        if (!nutritionData) {
+            console.log(nutritionData);
+            alert("Failed to fetch nutrition data");
+            return;
+        }
+
+        try {
+            await signInWithEmailAndPassword(auth, "bobjones101@aol.com", "bobjones");
+            await addDoc(collection(db, "food"), {
+                snack: nutritionData.name,  // Store name of food/snack
+                calories: nutritionData.calories,
+                servingSize: nutritionData.servingSize,
+                fat_total: nutritionData.fat_total,
+                fat_saturated: nutritionData.fat_saturated,
+                protein: nutritionData.protein,
+                sodium: nutritionData.sodium,
+                potassium: nutritionData.potassium,
+                cholesterol: nutritionData.cholesterol,
+                carbs: nutritionData.carbs,
+                fiber: nutritionData.fiber,
+                sugar: nutritionData.sugar,
+                
+                
+            });
+
+            alert("Snack added successfully!");
+            document.getElementById('snack-form').reset();
+        } catch (e) {
+            console.error("Error adding document: ", e);
+            alert("Failed to add snack.");
+        }
+    }
+
+  
+    document.getElementById('snack-form').addEventListener('submit', submitSnack);
+  </script>
+  
+  
+</head>
+<body>
+  <h1>Snack Track</h1>
+  <form id="snack-form">
+    <label for="snack">What snak :)</label>
+    <input type="text" id="snack" name="snack" required><br><br>
+    <button type="submit">Add Snack</button>
+  </form>
+</body>
+</html>
