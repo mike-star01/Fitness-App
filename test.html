@@ -11,20 +11,14 @@
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
   
     const firebaseConfig = {
-      apiKey: "AIzaSyD4jRqsHlQj_-T3nu1tiVlFFyY5h1KDcMs",
-      authDomain: "fitness-app-1400a.firebaseapp.com",
-      projectId: "fitness-app-1400a",
-      storageBucket: "fitness-app-1400a.appspot.com",
-      messagingSenderId: "653709233734",
-      appId: "1:653709233734:web:a88e8ad3bf5f09cbbc4447",
-      measurementId: "G-432SSL8KDG"
+      
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
   
-    const food_API_KEY = "N5dWTX+Cx5yMpwC3tVR/Jw==E2Wzsqk4eJY7pwVQ";
+    const food_API_KEY = "API_KEY";
     const food_apiUrl = 'https://api.calorieninjas.com/v1/nutrition?query=';
     //const query = 'half a cup of chicken fried rice';
   
